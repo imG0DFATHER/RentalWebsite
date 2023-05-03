@@ -110,7 +110,7 @@ export default function Header() {
                                         className="font-link peer border-transparent focus:border-transparent focus:ring-0 h-full w-full outline-none text-sm font-light"
                                         type="text"
                                         id="search"
-                                        placeholder="Search something.." />
+                                        placeholder="HELLO something.." />
                                 </div>
                             </div>
                             <div className="absolute pl-32 inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
