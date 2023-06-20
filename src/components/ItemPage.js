@@ -172,7 +172,7 @@ const ItemPage = (props) => {
                         <div className='flex flex-row justify-center text-site-blue font-semibold text-xl'>₹ 2800</div>
                       </div>
                     </div>
-                    <div className='cursor-pointer w-28 h-16 block bg-white border-0 border-site-blue/20 shadow-inner shadow-black/40 ml-2 mr-6 rounded-md text-bg-site-blue/40'>
+                    <div className='cursor-pointer w-28 h-16 block  bg-site-blue/30 border-0 border-site-blue/20 shadow-sm shadow-white mx-2 rounded-md text-white'>
                       <div className='flex flex-col mt-1'>
                         <div className='flex flex-row justify-center'>Month</div>
                         <div className='flex flex-row justify-center text-site-blue font-semibold text-xl'>₹ 15k</div>

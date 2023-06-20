@@ -11,13 +11,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const Home = () => {
 
-  // componentWillMount() {
-  //   setTimeout(() => {
-  //     window.history.forward()
-  //   }, 0)
-  //   window.onunload = function () { null };
-  // }
-
   const history = useNavigate();
 
   const [inpval, setInpval] = useState({
@@ -38,12 +31,6 @@ const Home = () => {
   const [error, setError] = useState(false);
   console.log(inpval);
 
-  //   useEffect(() => {
-  //     let isAuth = JSON.parse(localStorage.getItem('user_login'));
-  //     if (isAuth && isAuth !== null) {
-  //         navigate("/");
-  //     }
-  // }, []);
 
   useEffect(() => {
     const userDetails = JSON.parse(localStorage.getItem('user'));
@@ -61,10 +48,8 @@ const Home = () => {
   }, []);
 
   const getdata = (e) => {
-    // console.log(e.target.value);
 
     const { value, name } = e.target;
-    // console.log(value,name);
 
     setInpval(() => {
       return {
@@ -74,55 +59,92 @@ const Home = () => {
     });
   };
 
-  const addData = (e) => {
+  const addData = async (e) => {
     e.preventDefault();
 
     const { name, email, password, password_confirmation } = inpval;
     console.log(email);
 
-    if (user.includes(email.toString())) {
-      toast.error('Email already exists!', {
-        position: 'top-center',
-      });
-    } else if (name === '') {
-      toast.error('Name field is required!', {
-        position: 'top-center',
-      });
-    } else if (email === '') {
-      toast.error('Email field is required', {
-        position: 'top-center',
-      });
-    } else if (!email.includes('@')) {
-      toast.error('Please enter valid email address', {
-        position: 'top-center',
-      });
-    } else if (password === '') {
-      toast.error('Password field is required', {
-        position: 'top-center',
-      });
-    } else if (password.length < 5) {
-      toast.error('Password length must be greater five', {
-        position: 'top-center',
-      });
-    } else if (password_confirmation === '') {
-      toast.error('Enter password again', {
-        position: 'top-center',
-      });
-    } else if (password_confirmation !== password) {
-      toast.error('Enter the same password', {
-        position: 'top-center',
-      });
-    } else {
-      console.log('data added successfully');
-      history('/login');
-      // localStorage.setItem("user", JSON.stringify([...data, inpval]));
-      let oldData = JSON.parse(localStorage.getItem('user'));
-      if (!oldData)
-        localStorage.setItem('user', JSON.stringify([...data, inpval]));
-      else {
-        localStorage.setItem('user', JSON.stringify([...oldData, inpval]));
+    // POST request using fetch()
+    const res = await fetch("http://localhost:7000/signup", {
+
+      // Adding method type
+      method: "POST",
+
+      // Adding body or contents to send
+      body: JSON.stringify({
+        username: name,
+        email: email,
+        password: password,
+        cpassword: password_confirmation
+      }),
+
+      // Adding headers to the request
+      headers: {
+        "Content-type": "application/json; charset=UTF-8"
       }
+    })
+
+    const data = await res.json();
+
+    if (data.status === 422 || !data) {
+      window.alert('Invalid Registration')
+      console.log('Invalid Registration')
+    } else {
+      window.alert('Registration Successful')
+      console.log('Successful Registration')
+
+      history('/login');
     }
+
+
+    // .then(res => res.json())
+    // .then(json => console.log(json))
+
+    // Converting to JSON
+
+    // if (user.includes(email.toString())) {
+    //   toast.error('Email already exists!', {
+    //     position: 'top-center',
+    //   });
+    // } else if (name === '') {
+    //   toast.error('Name field is required!', {
+    //     position: 'top-center',
+    //   });
+    // } else if (email === '') {
+    //   toast.error('Email field is required', {
+    //     position: 'top-center',
+    //   });
+    // } else if (!email.includes('@')) {
+    //   toast.error('Please enter valid email address', {
+    //     position: 'top-center',
+    //   });
+    // } else if (password === '') {
+    //   toast.error('Password field is required', {
+    //     position: 'top-center',
+    //   });
+    // } else if (password.length < 5) {
+    //   toast.error('Password length must be greater five', {
+    //     position: 'top-center',
+    //   });
+    // } else if (password_confirmation === '') {
+    //   toast.error('Enter password again', {
+    //     position: 'top-center',
+    //   });
+    // } else if (password_confirmation !== password) {
+    //   toast.error('Enter the same password', {
+    //     position: 'top-center',
+    //   });
+    // } else {
+    //   console.log('data added successfully');
+    //   // localStorage.setItem("user", JSON.stringify([...data, inpval]));
+    //   let oldData = JSON.parse(localStorage.getItem('user'));
+    //   if (!oldData)
+    //     localStorage.setItem('user', JSON.stringify([...data, inpval]));
+    //   else {
+    //     localStorage.setItem('user', JSON.stringify([...oldData, inpval]));
+    //   }
+    // }
   };
 
   return (
